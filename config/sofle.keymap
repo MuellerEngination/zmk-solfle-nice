@@ -5,8 +5,8 @@
 #include <dt-bindings/zmk/rgb.h>
 
 #define BASE 0
-#define LOWER 1
-#define RAISE 2
+#define LEFT 1
+#define RIGHT 2
 #define ADJUST 3
 
 / {
@@ -16,7 +16,7 @@
         compatible = "zmk,conditional-layers";
 
         adjust_layer {
-            if-layers = <LOWER RAISE>;
+            if-layers = <LEFT RIGHT>;
             then-layer = <ADJUST>;
         };
     };
@@ -34,12 +34,20 @@
             // | SHIFT |  Z  |  X  |  C   |  V   |  B   |  MUTE  |  |       |  N   |  M    |  ,    |  .   |   /   | SHIFT |
             //               | GUI | ALT  | CTRL | LOWER|  ENTER |  | SPACE | RAISE| CTRL  | ALT   | GUI  |
 
+//             bindings = <
+// &kp ESCAPE  &kp N1  &kp N2            &kp N3    &kp N4            &kp N5                              &kp N6     &kp N7         &kp N8     &kp N9   &kp N0    &kp MINUS
+// &kp GRAVE   &kp Q   &kp W             &kp E     &kp R             &kp T                               &kp Y      &kp U          &kp I      &kp O    &kp P     &kp LEFT_BRACKET
+// &kp TAB     &kp A   &kp S             &kp D     &lt 2 F           &kp G                               &kp H      &lt 1 J        &kp K      &kp L    &kp SEMI  &kp SQT
+// &kp LSHFT   &kp Z   &kp X             &kp C     &kp V             &kp B      &kp RET    &none      &kp N      &kp M          &kp COMMA  &kp DOT  &kp FSLH  &kp LSHIFT
+//                     &kp LEFT_CONTROL  &kp LALT  &kp LEFT_COMMAND  &mo LOWER  &kp RET       &kp SPACE  &mo RAISE  &kp BACKSPACE  &kp BACKSLASH   &kp NON_US_BACKSLASH
+//             >;
+
             bindings = <
-&kp ESCAPE  &kp N1  &kp N2            &kp N3    &kp N4            &kp N5                              &kp N6     &kp N7         &kp N8     &kp N9   &kp N0    &kp MINUS
-&kp GRAVE   &kp Q   &kp W             &kp E     &kp R             &kp T                               &kp Y      &kp U          &kp I      &kp O    &kp P     &kp LEFT_BRACKET
-&kp TAB     &kp A   &kp S             &kp D     &lt 2 F           &kp G                               &kp H      &lt 1 J        &kp K      &kp L    &kp SEMI  &kp SQT
-&kp LSHFT   &kp Z   &kp X             &kp C     &kp V             &kp B      &kp RET    &none      &kp N      &kp M          &kp COMMA  &kp DOT  &kp FSLH  &kp LSHIFT
-                    &kp LEFT_CONTROL  &kp LALT  &kp LEFT_COMMAND  &mo LOWER  &kp RET       &kp SPACE  &mo RAISE  &kp BACKSPACE  &kp BACKSLASH   &kp NON_US_BACKSLASH
+&kp ESCAPE  &kp N1  &kp N2            &kp N3    &kp N4            &kp N5                                &kp N6              &kp N7              &kp N8     &kp N9   &kp N0    &kp MINUS
+&kp GRAVE   &kp Q   &kp W             &kp E     &kp R             &kp T                                 &kp Y               &kp U               &kp I      &kp O    &kp P     &kp LEFT_BRACKET
+&kp TAB     &kp A   &kp S             &kp D     &lt 2 F           &kp G                                 &kp H               &lt 1 J             &kp K      &kp L    &kp SEMI  &kp SQT
+&kp LSHFT   &kp Z   &kp X             &kp C     &kp V             &kp B      &kp RET       &kp LA(D)    &kp N               &kp M               &kp COMMA  &kp DOT  &kp FSLH  &kp LSHIFT
+                    &kp LEFT_CONTROL  &kp LALT  &kp LEFT_COMMAND  &mo DEL    &kp RET       &kp SPACE    &mo BACKSPACE       &kp RIGHT_COMMAND   &mo RALT   &kp ADJUST
             >;
 
             sensor-bindings =
@@ -47,8 +55,8 @@
                 <&inc_dec_kp RIGHT_ARROW LEFT_ARROW>;
         };
 
-        lower_layer {
-            display-name = "lower";
+        left_layer {
+            display-name = "left";
 
             // TODO: Some binds are waiting for shifted keycode support.
             // ------------------------------------------------------------------------------------------------------------
@@ -58,19 +66,27 @@
             // |       |  =  |  -  |  +   |  {   |  }   |        |  |       |  [   |  ]    |  ;    |  :   |   \   |       |
             //               |     |      |      |      |        |  |       |      |       |       |      |
 
+//             bindings = <
+// &trans     &kp F1     &kp F2     &kp F3       &kp F4    &kp F5                       &kp F6     &kp F7    &kp F8           &kp F9     &kp F10   &kp F11
+// &kp GRAVE  &kp N1     &kp N2     &kp N3       &kp N4    &kp N5                       &kp N6     &kp N7    &kp N8           &kp N9     &kp N0    &kp F12
+// &trans     &kp EXCL   &kp AT     &kp HASH     &kp DLLR  &kp PRCNT                    &kp CARET  &kp AMPS  &kp KP_MULTIPLY  &kp LPAR   &kp RPAR  &kp PIPE
+// &trans     &kp EQUAL  &kp MINUS  &kp KP_PLUS  &kp LBRC  &kp RBRC   &trans    &trans  &kp LBKT   &kp RBKT  &kp SEMI         &kp COLON  &kp BSLH  &trans
+//                       &trans     &trans       &trans    &trans     &trans    &trans  &trans     &trans    &trans           &trans
+//             >;
+
             bindings = <
-&trans     &kp F1     &kp F2     &kp F3       &kp F4    &kp F5                       &kp F6     &kp F7    &kp F8           &kp F9     &kp F10   &kp F11
-&kp GRAVE  &kp N1     &kp N2     &kp N3       &kp N4    &kp N5                       &kp N6     &kp N7    &kp N8           &kp N9     &kp N0    &kp F12
-&trans     &kp EXCL   &kp AT     &kp HASH     &kp DLLR  &kp PRCNT                    &kp CARET  &kp AMPS  &kp KP_MULTIPLY  &kp LPAR   &kp RPAR  &kp PIPE
-&trans     &kp EQUAL  &kp MINUS  &kp KP_PLUS  &kp LBRC  &kp RBRC   &trans    &trans  &kp LBKT   &kp RBKT  &kp SEMI         &kp COLON  &kp BSLH  &trans
+&trans     &kp F1                      &kp F2                  &kp F3                  &kp F4                   &kp F5                                         &kp F6     &kp F7    &kp F8           &kp F9     &kp F10   &kp F11
+&kp GRAVE  &kp INS                     &kp PSCRN               &kp LA(LC(UP_ARROW))    &trans                   &trans                                         &kp N6     &kp N7    &kp N8           &kp N9     &kp N0    &kp F12
+&trans     &kp LA(LC(LG(LEFT_ARROW)))  &kp LA(LC(LEFT_ARROW))  &kp LA(LC(DOWN_ARROW))  &kp LA(LC(RIGHT_ARROW))  &kp LA(LC(LG(RIGHT_ARROW)))                    &kp CARET  &kp AMPS  &kp KP_MULTIPLY  &kp LPAR   &kp RPAR  &kp PIPE
+&trans     &kp NON_US_BACKSLASH        &kp MINUS               &kp KP_PLUS             &kp LBRC                 &kp RBRC                &trans    &trans  &kp LBKT   &kp RBKT  &kp SEMI         &kp COLON  &kp BSLH  &trans
                       &trans     &trans       &trans    &trans     &trans    &trans  &trans     &trans    &trans           &trans
             >;
 
             sensor-bindings = <&inc_dec_kp C_VOL_DN C_VOL_UP &inc_dec_kp PG_UP PG_DN>;
         };
 
-        raise_layer {
-            display-name = "raise";
+        right_layer {
+            display-name = "right";
 
             // ------------------------------------------------------------------------------------------------------------
             // | BTCLR | BT1  | BT2  |  BT3  |  BT4  |  BT5 |                |      |      |       |      |       |       |
@@ -79,12 +95,20 @@
             // |       | UNDO | CUT  | COPY  | PASTE |      |      |  |      |      |      |       |      |       |       |
             //                |      |       |       |      |      |  |      |      |      |       |      |
 
+//             bindings = <
+// &trans      &trans                      &trans                  &trans                  &trans                   &trans                                                  &trans     &trans    &kt K_MUTE  &kt K_VOLUME_DOWN  &kp K_VOLUME_UP  &kp EQUAL
+// &trans      &kp INS                     &kp PSCRN               &kp LA(LC(UP_ARROW))    &trans                   &trans                                                  &kp PG_UP  &trans    &kp UP      &trans           &kp N0        &kp KP_PLUS
+// &trans      &kp LA(LC(LG(LEFT_ARROW)))  &kp LA(LC(LEFT_ARROW))  &kp LA(LC(DOWN_ARROW))  &kp LA(LC(RIGHT_ARROW))  &kp LA(LC(LG(RIGHT_ARROW)))                             &kp PG_DN  &kp LEFT  &kp DOWN    &kp RIGHT        &kp DEL       &kp KP_MULTIPLY
+// &trans      &kp K_UNDO                  &kp K_CUT               &kp K_COPY              &kp K_PASTE              &trans                       &trans             &kp RET  &trans     &trans    &trans      &trans           &trans        &trans
+//                                         &trans                  &trans                  &trans                   &trans                       &kp LC(LA(RET))    &trans  &trans     &trans    &trans      &trans
+//             >;
+
             bindings = <
-&trans      &trans                      &trans                  &trans                  &trans                   &trans                                                  &trans     &trans    &kt K_MUTE  &kt K_VOLUME_DOWN  &kp K_VOLUME_UP  &kp 0x2E
-&trans      &kp INS                     &kp PSCRN               &kp LA(LC(UP_ARROW))    &trans                   &trans                                                  &kp PG_UP  &trans    &kp UP      &trans           &kp N0        &kp KP_PLUS
-&trans      &kp LA(LC(LG(LEFT_ARROW)))  &kp LA(LC(LEFT_ARROW))  &kp LA(LC(DOWN_ARROW))  &kp LA(LC(RIGHT_ARROW))  &kp LA(LC(LG(RIGHT_ARROW)))                             &kp PG_DN  &kp LEFT  &kp DOWN    &kp RIGHT        &kp DEL       &kp KP_MULTIPLY
-&trans      &kp K_UNDO                  &kp K_CUT               &kp K_COPY              &kp K_PASTE              &trans                       &trans             &kp RET  &trans     &trans    &trans      &trans           &trans        &trans
-                                        &trans                  &trans                  &trans                   &trans                       &kp LC(LA(RET))    &trans  &trans     &trans    &trans      &trans
+&trans      &kp F1                      &kp F2                  &kp F3                  &kp F4                   &kp F5                                                     &kp F6     &kp F7    &kp F8      &kp F9           &kp F10       &kp EQUAL
+&trans      &kp INS                     &kp PSCRN               &kp LA(LC(UP_ARROW))    &trans                   &trans                                                     &kp PG_UP  &trans    &kp UP      &trans           &kp N0        &kp KP_PLUS
+&trans      &kp LA(LC(LG(LEFT_ARROW)))  &kp LA(LC(LEFT_ARROW))  &kp LA(LC(DOWN_ARROW))  &kp LA(LC(RIGHT_ARROW))  &kp LA(LC(LG(RIGHT_ARROW)))                                &kp PG_DN  &kp LEFT  &kp DOWN    &kp RIGHT        &kp DEL       &kp BACKSLASH
+&trans      &kp K_UNDO                  &kp K_CUT               &kp K_COPY              &kp K_PASTE              &trans                       &trans             &kp RET    &trans     &trans    &trans      &trans           &trans        &kp LSHIFT
+                                        &trans                  &trans                  &trans                   &trans                       &kp LC(LA(RET))    &trans     &trans     &trans    &trans      &trans
             >;
 
             sensor-bindings = <&inc_dec_kp C_VOL_DN C_VOL_UP &inc_dec_kp PG_UP PG_DN>;
